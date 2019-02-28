@@ -1,11 +1,7 @@
-module.exports = (app, db) => {
-  //auth
-  app.get("/me", (req, res) => {
-    res.send("Signup!");
-  });
+const express = require("express");
+const router = express.Router();
 
-  //auth
-  app.get("/me/update-password", (req, res) => {
-    res.send("Signup!");
-  });
-};
+router.get("/", (req, res) => res.send("me"));
+router.get("/update-password", (req, res) => res.send("update password"));
+
+module.exports = router;

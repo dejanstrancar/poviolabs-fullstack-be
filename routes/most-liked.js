@@ -1,5 +1,6 @@
-module.exports = (app, db) => {
-  app.get("/most-liked", (req, res) => {
-    res.send("Signup!");
-  });
-};
+const express = require("express");
+const router = express.Router();
+
+router.get("/", (req, res) => res.send("Most liked"));
+
+module.exports = router;

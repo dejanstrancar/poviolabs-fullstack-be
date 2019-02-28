@@ -1,17 +1,15 @@
 const express = require("express");
 const app = express();
-const port = 3000;
-
+const PORT = process.env.PORT || 3000;
+const mongoose = require("mongoose");
 const db = {};
 
-app.get("/", (req, res) => {
-  res.send("Hello world!");
-});
+// Routes
+app.use("/", require("./routes/index"));
+app.use("/signup", require("./routes/signup"));
+app.use("/login", require("./routes/login"));
+app.use("/me", require("./routes/me"));
+app.use("/user", require("./routes/user"));
+app.use("/most-liked", require("./routes/most-liked"));
 
-require("./routes/me")(app, db);
-require("./routes/login")(app, db);
-require("./routes/signup")(app, db);
-require("./routes/user")(app, db);
-require("./routes/most-liked")(app, db);
-
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`));

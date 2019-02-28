@@ -1,15 +1,16 @@
-module.exports = (app, db) => {
-  app.get("/user/:id", (req, res) => {
-    res.send("Signup!");
-  });
+const express = require("express");
+const router = express.Router();
 
-  //auth
-  app.get("/user/:id/like", (req, res) => {
-    res.send("Signup!");
-  });
+router.get("/:id", (req, res) => {
+  res.send("Get user by id!");
+});
 
-  //auth
-  app.get("/user/:id/unlike", (req, res) => {
-    res.send("Signup!");
-  });
-};
+router.get("/:id/like", (req, res) => {
+  res.send("like user!");
+});
+
+router.get("/:id/unlike", (req, res) => {
+  res.send("unlike user!");
+});
+
+module.exports = router;
