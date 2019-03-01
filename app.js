@@ -1,8 +1,25 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
-const db = {};
+const logger = require("morgan");
+const passport = require("passport");
+require("./middlewares/passport")(passport);
+const CONFIG = require("./config/config");
+
+// Connect
+let mongoUri = CONFIG.MongoURI;
+if (CONFIG.environment === "test") mongoUri = CONFIG.MongoTestURI;
+
+mongoose
+  .connect(mongoUri, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB connected..."))
+  .catch(err => console.log(err));
+
+// Middleware
+app.use(passport.initialize());
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use("/", require("./routes/index"));
@@ -12,4 +29,12 @@ app.use("/me", require("./routes/me"));
 app.use("/user", require("./routes/user"));
 app.use("/most-liked", require("./routes/most-liked"));
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`));
+// Run
+if (CONFIG.environment != "test") {
+  app.listen(CONFIG.port, () =>
+    console.log(`Example app listening on port ${CONFIG.port}`)
+  );
+}
+
+// For test purposes
+module.exports = app;
