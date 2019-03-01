@@ -33,6 +33,10 @@ router.post("/", validateRequest, async (req, res) => {
         if (err)
           res.status(500).json({ error: "Error signing token", raw: err });
         res.json({
+          user: {
+            name: user.username,
+            liked: user.liked
+          },
           token: `Bearer ${token}`
         });
       }

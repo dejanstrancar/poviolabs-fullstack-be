@@ -8,7 +8,17 @@ const signupDataSchema = Joi.object({
     .strict()
 });
 
+const login = signupDataSchema;
+
+const changePasswordDataSchema = Joi.object({
+  password: Joi.string()
+    .min(7)
+    .required()
+    .strict()
+});
+
 module.exports = {
   "/signup": signupDataSchema,
-  "/login": signupDataSchema
+  "/login": login,
+  "/me/update-password": changePasswordDataSchema
 };

@@ -11,13 +11,30 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  likes: Number,
-  dateCreated: { type: Date, default: Date.now }
+  likedBy: {
+    type: [String],
+    default: []
+  },
+  numberOfLikes: {
+    type: Number,
+    default: 0
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
+  dateUpdated: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 UserSchema.pre("save", async function(next) {
   if (this.isModified("password"))
     this.password = await bcrypt.hash(this.password, 10);
+
+  this.dateUpdated = new Date();
+  this.numberOfLikes = this.likedBy.length;
 
   return next();
 });
