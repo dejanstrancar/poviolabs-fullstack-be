@@ -30,7 +30,7 @@ router.post(
     user = await userHelper.getUser(req.user._id.toString(), res);
 
     user.password = req.body.password;
-    user.save();
+    await user.save();
 
     return res.json({
       success: "true",
